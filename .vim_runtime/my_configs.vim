@@ -38,8 +38,8 @@ colorscheme peaksea           " 颜色主题
 set background=light
 
 " 字体设置
-set guifont=Cousine\ Nerd\ Font\ 12
-"set guifont=Courier\ 10\ Pitch\ 12
+"set guifont=Cousine\ Nerd\ Font\ 12
+set guifont=Courier\ 10\ Pitch\ 12
 set guioptions+=T
 set guioptions+=r
 
@@ -88,23 +88,22 @@ command! DecreaseFont call DecreaseFontSize()
 " ============================================================================
 " 6. 本地插件管理（vim-plug）
 " ============================================================================
-call plug#begin()  " 无需指定路径，直接使用本地插件路径
+" 直接把插件根目录设为 plug#begin 的默认路径
+call plug#begin(fnameescape(g:VIM_RUNTIME_PATH . '/user_plugin'))
 
 " 通用插件
-Plug '~/.vim/user_plugin/vim-easy-align'
+Plug 'vim-easy-align'
 
 " Mark 插件
-Plug '~/.vim/user_plugin/mark/vim-ingo-library'
-Plug '~/.vim/user_plugin/mark/vim-mark'
-
-Plug '~/.vim/user_plugin/indentLine'
-Plug '~/.vim/user_plugin/vim-matchup'
-"Plug '~/.vim/user_plugin/verilog_systemverilog.vim'
+Plug 'mark/vim-ingo-library'
+Plug 'mark/vim-mark'
+Plug 'indentLine'
+Plug 'vim-matchup'
+"Plug 'verilog_systemverilog.vim'
 
 " Airline 状态栏
-Plug '~/.vim/user_plugin/airline/vim-airline-0.11'
-Plug '~/.vim/user_plugin/airline/vim-airline-themes-master'
-
+Plug 'airline/vim-airline-0.11'
+Plug 'airline/vim-airline-themes-master'
 
 call plug#end()
 

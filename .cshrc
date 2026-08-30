@@ -14,13 +14,10 @@ setenv PATH /app/common/cad/flist/:$PATH
 ##########################
 # Tools version choice
 setenv SHARE_HOME  "/wx_data/share/"
-#setenv MODULEPATH "/home2/usrhome/zengjie/.local/modules/modulefiles/tools:$MODULEPATH"
 
-setenv USER_MODULES_HOME "/usrhome/zengjie/.local/modules/modulefiles/tools"
-setenv MODULEPATH "$USER_MODULES_HOME/:/app/tools/modules/modulefiles/synopsys:$MODULEPATH"
-# add linghow's modulelist
 setenv APP_HOME "/app"
-#setenv MODULEPATH "$APP_HOME/tools/modules/modulefiles/tools:/app/tools/modules/modulefiles/synopsys:$MODULEPATH"
+setenv USER_MODULES_HOME "/usrhome/zengjie/.local/modules/modulefiles/tools"
+#setenv MODULEPATH "$USER_MODULES_HOME/:/app/tools/modules/modulefiles/synopsys:$MODULEPATH"
 
 # load default tools
 module load vim/9.0
@@ -65,7 +62,7 @@ alias gui-res "pkill -u $USER xfwm4 ; xfwm4 &"
 alias cpu-disp "ps -eo user,pcpu,args --sort=-pcpu | head -n 21"
 
 ### direnv:: autoload .envrc
-alias precmd 'eval `/home2/usrhome/linyifan/.local/bin/direnv export tcsh`'
+#alias precmd 'eval `/home2/usrhome/linyifan/.local/bin/direnv export tcsh`'
 
 ##############################
 # Prompt format
