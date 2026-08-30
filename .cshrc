@@ -8,6 +8,14 @@ if (-f $CAD_TOOL_CSHRC) then
 endif
 unset CAD_TOOL_CSHRC
 
+### check PATH and LD_LIBRARY_PATH 
+if ($?PATH == 0) then
+    setenv PATH ""
+endif
+if ($?LD_LIBRARY_PATH == 0) then
+    setenv LD_LIBRARY_PATH ""
+endif
+
 setenv LD_LIBRARY_PATH /usr/lib:$LD_LIBRARY_PATH
 setenv PATH /app/common/cad/flist/:$PATH
 
@@ -20,7 +28,7 @@ setenv USER_MODULES_HOME "/usrhome/zengjie/.local/modules/modulefiles/tools"
 #setenv MODULEPATH "$USER_MODULES_HOME/:/app/tools/modules/modulefiles/synopsys:$MODULEPATH"
 
 # load default tools
-module load vim/9.0
+#module load vim/9.0
 
 ##############################
 # User's Workspace
