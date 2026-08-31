@@ -1,0 +1,27 @@
+[Unit]
+Description=Synopsys FlexNet License Manager (lmgrd)
+After=network.target
+
+[Service]
+# 以您的普通用户 yian 身份运行，避免权限问题
+User=yian
+Group=yian
+
+# 设置环境变量（可选，但推荐，防止某些 daemon 找不到依赖）
+Environment="LD_LIBRARY_PATH=/home/yian/Synopsys/scl/2024.06/linux64/bin"
+
+# 启动命令 (请替换为您实际的 lmgrd 路径)
+ExecStart=/home/yian/Synopsys/scl/2024.06/linux64/bin/lmgrd -c /home/yian/Synopsys/scl/2024.06/admin/license/synopsys.lic -l /home/yian/Synopsys/scl/2024.06/admin/license/lmgrd_boot.log
+
+# 停止命令 (使用 lmrmdown 优雅停止，请替换 lmrmdown 的实际路径)
+ExecStop=/home/yian/Synopsys/scl/2024.06/linux64/bin/lmrmdown -c /home/yian/Synopsys/scl/2024.06/admin/license/synopsys.lic -vendor snpslmd
+
+# 进程类型：lmgrd 启动后会 fork 到后台，所以必须是 forking
+Type=forking
+
+# 如果意外退出，自动重启
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
