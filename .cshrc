@@ -42,7 +42,7 @@ alias gllp       'git log -p'                 # 展示代码diff
 alias grf        'git reflog --oneline'       # 本地操作历史，找回reset提交
 alias ga         'git add \!*'
 alias gaa        'git add .'
-alias gc         'git commit -m "\!*"'
+alias gc         'git commit '
 alias gca        'git commit --amend'         # 修改上一次commit
 alias gcan       'git commit --amend --no-edit' # 追加修改不修改注释
 alias gp         'git push \!*'
@@ -60,10 +60,11 @@ alias grsh       'git reset --hard HEAD~1'   # ⚠️彻底丢弃上次提交改
 alias grh        'git reset --hard HEAD'      # 丢弃本地所有未提交修改
 alias grev       'git revert \!*'
 alias gmg        'git merge \!*'
-alias gst        'git stash'
-alias gstl       'git stash list'
-alias gstp       'git stash pop'
-alias gstd       'git stash drop'
+alias gst        'git status'
+alias gstash     'git stash'
+alias gstashl    'git stash list'
+alias gstashp    'git stash pop'
+alias gstashd    'git stash drop'
 alias gfetch     'git fetch --prune'          #拉取远程，清理已经删除远程分支引用
 
 #==================== SVN 常用别名 csh/tcsh ====================
@@ -84,58 +85,6 @@ alias svclean    'svn status | grep "^\?" | awk "{print \$2}" | xargs rm -rf' #�
 #==================== 快捷帮助 ====================
 alias ghelp      'echo "gs status; gl log; ga add; gc commit; gp push; gpl pull; grss soft reset~1; grsh hard reset~1; grf reflog"'
 alias svhelp     'echo "svst status; svup update; svci commit; svdiff diff; svlog log; svrevertall revert all local changes"'
-
-#==================== Git 常用别名 csh/tcsh ====================
-alias gs         'git status'
-alias gl         'git log --oneline -10'      # 最近10条简洁日志
-alias gll        'git log --stat'             # 带变更文件统计
-alias gllp       'git log -p'                 # 展示代码diff
-alias grf        'git reflog --oneline'       # 本地操作历史，找回reset提交
-alias ga         'git add \!*'
-alias gaa        'git add .'
-alias gc         'git commit -m "\!*"'
-alias gca        'git commit --amend'         # 修改上一次commit
-alias gcan       'git commit --amend --no-edit' # 追加修改不修改注释
-alias gp         'git push \!*'
-alias gpf        'git push --force-with-lease \!*' #安全强推，优先用这个，不要直接--force
-alias gpl        'git pull \!*'
-alias gco        'git checkout \!*'
-alias gcb        'git checkout -b \!*'        # 创建并切换新分支
-alias gb         'git branch'
-alias gba        'git branch -a'              # 显示本地+远程全部分支
-alias gd         'git diff \!*'
-alias gdc        'git diff --cached \!*'      # 对比暂存区diff
-alias grs        'git reset \!*'
-alias grss       'git reset --soft HEAD~1'    # 撤销上次commit，保留改动到暂存
-alias grsh       'git reset --hard HEAD~1'    # Warning: 彻底丢弃上次提交改动
-alias grh        'git reset --hard HEAD'      # 丢弃本地所有未提交修改
-alias grev       'git revert \!*'
-alias gmg        'git merge \!*'
-alias gst        'git stash'
-alias gstl       'git stash list'
-alias gstp       'git stash pop'
-alias gstd       'git stash drop'
-alias gfetch     'git fetch --prune'          #拉取远程，清理已经删除远程分支引用
-
-#==================== SVN 常用别名 csh/tcsh ====================
-alias svst       'svn status'
-alias svup       'svn update'
-alias svci       'svn commit -m "\!*"'
-alias svco       'svn checkout \!*'
-alias svadd      'svn add \!*'
-alias svrm       'svn rm \!*'
-alias svmv       'svn mv \!*'
-alias svdiff     'svn diff \!*'
-alias svlog      'svn log -l 10 \!*'          #最近10条svn日志
-alias svinfo     'svn info'
-alias svrevert   'svn revert \!*'
-alias svrevertall 'svn revert -R .'           #撤销当前目录全部本地修改
-alias svclean    'svn status | grep "^\?" | awk "{print \$2}" | xargs rm -rf' #删除svn未纳入版本的临时文件
-
-#==================== 快捷帮助 ====================
-alias ghelp      'echo "gs status; gl log; ga add; gc commit; gp push; gpl pull; grss soft reset~1; grsh hard reset~1; grf reflog"'
-alias svhelp     'echo "svst status; svup update; svci commit; svdiff diff; svlog log; svrevertall revert all local changes"'
-
 
 ##############################
 # User's Workspace
