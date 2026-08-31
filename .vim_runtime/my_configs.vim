@@ -38,8 +38,16 @@ colorscheme peaksea           " 颜色主题
 set background=light
 
 " 字体设置
-"set guifont=Cousine\ Nerd\ Font\ 12
-set guifont=Courier\ 10\ Pitch\ 12
+" 仅在 GUI 模式 (gvim) 下执行字体设置
+if has('gui_running')
+    " 使用 fc-list 检查系统中是否存在 Cousine Nerd Font
+    " grep -i 表示忽略大小写，提高匹配成功率
+    if system('fc-list | grep -i "Cousine Nerd Font"') !=# ''
+        set guifont=Cousine\ Nerd\ Font\ 12
+    else
+        set guifont=Courier\ 10\ Pitch\ 12
+    endif
+endif
 set guioptions+=T
 set guioptions+=r
 
@@ -89,7 +97,7 @@ command! DecreaseFont call DecreaseFontSize()
 " 6. 本地插件管理（vim-plug）
 " ============================================================================
 " 直接把插件根目录设为 plug#begin 的默认路径
-call plug#begin(fnameescape(g:VIM_RUNTIME_PATH . '/user_plugin'))
+call plug#begin(fnameescape(g:VIM_RUNTIME_PATH . '/my_plugin'))
 
 " 通用插件
 Plug 'vim-easy-align'

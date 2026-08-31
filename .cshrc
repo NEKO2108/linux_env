@@ -1,3 +1,6 @@
+# 当目录改变时，通知 GNOME Terminal 当前路径
+alias cwdcmd 'printf "\033]7;file://%s%s\007" "`hostname`" "$PWD"'
+
 ##########################
 # COMPANY Tools
 setenv COMPANY "JOINSILICON"
