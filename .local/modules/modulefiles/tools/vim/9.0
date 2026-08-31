@@ -1,0 +1,6 @@
+#%Module1.0
+
+prepend-path	PATH /app/tools/vim9.0/bin
+prepend-path	LD_LIBRARY_PATH /usr/lib64/
+setenv		    PYROOT /app/tools/vim9.0
+
