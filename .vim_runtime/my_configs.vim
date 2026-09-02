@@ -1,6 +1,7 @@
 " ============================================================================
 " 1. 基础初始化（必须放在最前面）
 " ============================================================================
+execute pathogen#infect()
 set nocompatible              " 禁用 vi 兼容模式
 filetype plugin indent on     " 启用文件类型检测、插件和缩进
 
@@ -97,23 +98,23 @@ command! DecreaseFont call DecreaseFontSize()
 " 6. 本地插件管理（vim-plug）
 " ============================================================================
 " 直接把插件根目录设为 plug#begin 的默认路径
-call plug#begin(fnameescape(g:VIM_RUNTIME_PATH . '/my_plugin'))
-
-" 通用插件
-Plug 'vim-easy-align'
-
-" Mark 插件
-Plug 'mark/vim-ingo-library'
-Plug 'mark/vim-mark'
-Plug 'indentLine'
-Plug 'vim-matchup'
-"Plug 'verilog_systemverilog.vim'
-
-" Airline 状态栏
-Plug 'airline/vim-airline-0.11'
-Plug 'airline/vim-airline-themes-master'
-
-call plug#end()
+"call plug#begin(fnameescape(g:VIM_RUNTIME_PATH . '/my_plugin'))
+"
+"" 通用插件
+"Plug 'vim-easy-align'
+"
+"" Mark 插件
+"Plug 'vim-ingo-library'
+"Plug 'vim-mark'
+"Plug 'indentLine'
+"Plug 'vim-matchup'
+""Plug 'verilog_systemverilog.vim'
+"
+"" Airline 状态栏
+"Plug 'vim-airline-0.11'
+"Plug 'vim-airline-themes-master'
+"
+"call plug#end()
 
 " ============================================================================
 " 7. EasyAlign 配置
@@ -161,61 +162,6 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') | quit | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
     \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-
-""""""""""""""""""""""""""""""
-"vim-devicons settings
-""""""""""""""""""""""""""""""`
-"Can be enabled or disabled
-let g:webdevicons_enable_nerdtree = 1
-"whether or not to show the nerdtree brackets around flags
-let g:webdevicons_conceal_nerdtree_brackets = 1
-"adding to vim-airline's tabline
-let g:webdevicons_enable_airline_tabline = 1
-"adding to vim-airline's statusline
-let g:webdevicons_enable_airline_statusline = 1
-
-""""""""""""""""""""""""""""""
-"vim-nerdtree-syntax-highlight settings
-""""""""""""""""""""""""""""""
-"Highlight full name (not only icons). You need to add this if you don't have vim-devicons and want highlight.
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-
-"Highlight full name (not only icons). You need to add this if you don't have vim-devicons and want highlight.
-let g:NERDTreeHighlightFolders = 1
-
-"highlights the folder name
-let g:NERDTreeHighlightFoldersFullName = 1
-
-"you can add these colors to your .vimrc to help customizing
-let s:brown = "905532"
-let s:aqua =  "3AFFDB"
-let s:blue = "689FB6"
-let s:darkBlue = "44788E"
-let s:purple = "834F79"
-let s:lightPurple = "834F79"
-let s:red = "AE403F"
-let s:beige = "F5C06F"
-let s:yellow = "F09F17"
-let s:orange = "D4843E"
-let s:darkOrange = "F16529"
-let s:pink = "CB6F6F"
-let s:salmon = "EE6E73"
-let s:green = "8FAA54"
-let s:Turquoise = "40E0D0"
-let s:lightGreen = "31B53E"
-let s:white = "FFFFFF"
-let s:rspec_red = "FE405F"
-let s:git_orange = "F54D27"
-let s:gray = "808A87"
-
-let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExtensionHighlightColor['o'] = s:gray " sets the color of o files to blue
-let g:NERDTreeExtensionHighlightColor['h'] = s:blue " sets the color of h files to blue
-let g:NERDTreeExtensionHighlightColor['c'] = s:green " sets the color of c files to blue
-let g:NERDTreeExtensionHighlightColor['cpp'] = s:green " sets the color of cpp files to blue
-let g:NERDTreeExtensionHighlightColor['c++'] = s:green " sets the color of c++ files to blue
 
 " ============================================================================
 " 10. Airline 状态栏配置
