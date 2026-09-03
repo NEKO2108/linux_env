@@ -16,8 +16,8 @@ if os.path.isdir(_SHARED) and _SHARED not in sys.path:
 
 from vlogProcLib import *
 
-re_vim_inst_arg = re.compile(r"^\s*(?P<mname>\w+)(\+(?P<pfix>\w+)){0,1}(\+(?P<num>\w+)){0,1}(\+(?P<sfix>\w+)){0,1}\s*$", re.I)
 
+re_vim_inst_arg = re.compile(r"^\s*(?P<mname>\w+)(\+(?P<pfix>\w+)){0,1}(\+(?P<num>\w+)){0,1}(\+(?P<sfix>\w+)){0,1}\s*$", re.I)
 
 
 # Function 'proc_auto_empty_module' # {{{

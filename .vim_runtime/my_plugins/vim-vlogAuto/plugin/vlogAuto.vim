@@ -349,6 +349,7 @@ command  -nargs=+   AIIU                                                :call Au
 map <S-F4>                                                              :call AppendPortDriectionToInst(0)<ESC>
 
 map <C-F8>                                                              :call Invert()<ESC>
+
 map <F2>                                                                :call AutoComment()<ESC>
 map <F3>                                                                <ESC>:call AutoComment2()<ESC>
 map <F4>                                                                :call AddCurLineComment()<ESC>
@@ -364,7 +365,6 @@ map <C-F4>      :call SearchModule(0)<ESC>
 map <AS-D>      :call SearchDriverLite(0)<ESC>
 map <CA-B>      :call BackwardMark()<ESC>
 map <CA-F>      :call ForwardMark()<ESC>
-
 
 
 autocmd BufNewFile *.v call AutoTemplate()
@@ -503,7 +503,7 @@ function AddSig() "{{{2
 	let ret1 = "// sig      "
 	let ret2 = "//          "
 	for idx in range(s:sig_offset,s:wave_max_wd)
-            if idx > (s:sig_offset + 2*s:clk_period)+1
+        if idx > (s:sig_offset + 2*s:clk_period)+1
             let ret0 = ret0 . "-"
             let ret1 = ret1 . " "
             let ret2 = ret2 . " "
@@ -532,7 +532,7 @@ function AddBus() "{{{2
 	let ret1 = "// bus      "
 	let ret2 = "//          "
 	for idx in range(s:sig_offset,s:wave_max_wd)
-            if idx > (s:sig_offset + 2*s:clk_period)+1
+        if idx > (s:sig_offset + 2*s:clk_period)+1
             let ret0 = ret0 . "+"
             let ret1 = ret1 . "|"
             let ret2 = ret2 . "+"
@@ -974,7 +974,6 @@ endfunction "}}}2
 function AutoTemplate() "{{{2
 	let filename = expand("%")
 	let modulename = matchstr(filename,'\w\+')
-	call AddHeader()
     let lcnt = AddHeader()
 "    let lcnt = s:callAppend(lcnt, "`ifndef __" . substitute(toupper(filename),'\.','_','') . "__")
 "    let lcnt = s:callAppend(lcnt, "`define __" . substitute(toupper(filename),'\.','_','') . "__")
@@ -994,6 +993,7 @@ function AutoTemplate() "{{{2
         let lcnt = s:callAppend(lcnt, "initial begin")
         let lcnt = s:callAppend(lcnt, "    rstn = 1'b0;")
         let lcnt = s:callAppend(lcnt, "    #52 rstn = 1'b1;")
+        let lcnt = s:callAppend(lcnt, "end")
         let lcnt = s:callAppend(lcnt, "initial begin")
         let lcnt = s:callAppend(lcnt, "    //$vcdpluson(0,top);")
         let lcnt = s:callAppend(lcnt, '    $fsdbDumpfile("top.fsdb");')

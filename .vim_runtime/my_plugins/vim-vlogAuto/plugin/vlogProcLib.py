@@ -3380,7 +3380,6 @@ class ModuleInfo:
                 if add is False:
                     for orgPort in orgPortList:
                         if orgPort in self.mPorts['dict']:
-                        if orgPort in self.mPorts['dict']:
                             del self.self.mPorts['dict'][orgPort]
                 # -- Update mPorts['auto']
                 for tmpIname in self.mPorts['auto']:
@@ -3417,6 +3416,7 @@ class ModuleInfo:
                 delStart = self.mLocate['ewire'] + 1
             
         #xprint(fpLog, "delStart: {}  delEnd: {}".format(delStart, delEnd))
+
         lInPorts  = ["assign unused_ok = &{"]
         lOutPorts = []
         for port in self.mPorts['list']:
