@@ -1,9 +1,10 @@
 # 当目录改变时，通知 GNOME Terminal 当前路径
 alias cwdcmd 'printf "\033]7;file://%s%s\007" "`hostname`" "$PWD"'
+set ignorecase
 
 ##########################
 # COMPANY Tools
-setenv COMPANY "JOINSILICON"
+setenv COMPANY "OWN-RedHat8.10"
 set CAD_TOOL_CSHRC = /app/common/cad/env/cad.cshrc
 if (-f $CAD_TOOL_CSHRC) then
     echo "source $CAD_TOOL_CSHRC"
