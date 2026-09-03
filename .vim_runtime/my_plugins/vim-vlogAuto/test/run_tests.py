@@ -18,7 +18,7 @@ import io
 import contextlib
 
 # Add vlogAuto plugin dir to path
-PLUGIN_DIR = '/home2/usrhome/zengjie/.vim/plugin'
+PLUGIN_DIR = '../plugin'
 sys.path.insert(0, PLUGIN_DIR)
 
 # Mock vim module
