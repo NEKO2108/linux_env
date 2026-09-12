@@ -129,7 +129,7 @@ vmap gd :EasyAlign<Enter>-<Space>
 " 8. vim-mark 配置（Leader 键：\）
 " ============================================================================
 nmap @         <Plug>MarkSet
-vmap <M-m>     <Plug>MarkSet
+vmap @         <Plug>MarkSet
 nmap <M-r>     <Plug>MarkRegex
 vmap <M-r>     <Plug>MarkRegex
 nmap <M-n>     <Plug>MarkClear
@@ -138,7 +138,7 @@ nmap <M-/>     <Plug>MarkSearchAnyNext
 nmap <M-?>     <Plug>MarkSearchAnyPrev
 nmap 1         <Plug>MarkSearchCurrentNext
 nmap !         <Plug>MarkSearchCurrentPrev
-
+let g:mwDirectGroupJumpMappingNum = 16
 " ============================================================================
 " 9. 文件树配置
 " ============================================================================
@@ -194,6 +194,15 @@ let g:indentLine_showFirstIndentLevel = 1
 " ============================================================================
 let g:matchup_enabled = 1
 let g:matchup_matchparen_enabled = 1   " 高亮匹配对
+
+" ==========================================
+" vim-current-word 专属高亮设置 (适配 peaksea light)
+" ==========================================
+" 1. 光标正下方的词：黑色粗体 + 蓝色下划线 (最醒目，但不占用背景色)
+highlight VimCurrentWord cterm=bold,underline ctermfg=Black gui=bold,underline guifg=Black guisp=Blue
+
+" 2. 文件中其他相同的词：深灰色 + 灰色下划线 (可见但不喧宾夺主)
+highlight VimCurrentWordTwins cterm=underline ctermfg=DarkGrey gui=underline guifg=#555555 guisp=Grey
 
 " ============================================================================
 " amix vimrc configuration
