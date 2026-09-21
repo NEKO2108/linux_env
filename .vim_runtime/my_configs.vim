@@ -56,6 +56,7 @@ set guioptions+=r
 " 3. 文件类型自动命令
 " ============================================================================
 au BufRead,BufNewFile *.v   set filetype=verilog
+au BufRead,BufNewFile *.vh  set filetype=verilog
 au BufRead,BufNewFile *.sv  set filetype=systemverilog
 au BufRead,BufNewFile *.svh set filetype=systemverilog
 
