@@ -1060,7 +1060,7 @@ function AutoTemplate() "{{{2
       endif
         let lcnt = s:callAppend(lcnt, "")
         let lcnt = s:callAppend(lcnt, "//--------------------------------------------------------------------------")
-        let lcnt = s:callAppend(lcnt, "// Local Prameters")
+        let lcnt = s:callAppend(lcnt, "// Local Parameters")
         let lcnt = s:callAppend(lcnt, "// Parameters that can NOT be modified/overrided when instance this module")
         let lcnt = s:callAppend(lcnt, "//--------------------------------------------------------------------------")
         let lcnt = s:callAppend(lcnt, "")
