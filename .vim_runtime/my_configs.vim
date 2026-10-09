@@ -199,11 +199,11 @@ let g:matchup_matchparen_enabled = 1   " 高亮匹配对
 " ==========================================
 " vim-current-word 专属高亮设置 (适配 peaksea light)
 " ==========================================
-" 1. 光标正下方的词：黑色粗体 + 蓝色下划线 (最醒目，但不占用背景色)
-highlight VimCurrentWord cterm=bold,underline ctermfg=Black gui=bold,underline guifg=Black guisp=Blue
+" 1. 光标正下方的词：淡紫色粗体 + 蓝色下划线 (最醒目，但不占用背景色)
+highlight CurrentWord cterm=bold,underline ctermfg=183 gui=bold,underline guifg=#B388FF guisp=Blue
 
-" 2. 文件中其他相同的词：深灰色 + 灰色下划线 (可见但不喧宾夺主)
-highlight VimCurrentWordTwins cterm=underline ctermfg=DarkGrey gui=underline guifg=#555555 guisp=Grey
+" 2. 文件中其他相同的词：淡紫色 + 蓝色下划线 (可见但不喧宾夺主)
+highlight CurrentWordTwins  cterm=underline ctermfg=183 gui=underline guifg=#B388FF guisp=Grey
 
 " ============================================================================
 " amix vimrc configuration
