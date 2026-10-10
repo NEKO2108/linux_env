@@ -418,8 +418,9 @@ def get_module_ports(curStrs, mName=None, mFile='', dMacro={}, dCfg={}, silent=1
             continue
 
         # ~~ Get Parameters {
+        # Skip lines inside inactive `ifdef/`else branches
         preParamStr = ''
-        if inModule:
+        if inModule and all(curMacros.values()): 
             preParamStr = get_parameter(curStr, preParamStr, dParam, fpLog)
         # ~~ Get Parameters }
 
