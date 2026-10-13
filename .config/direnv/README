@@ -1,0 +1,107 @@
+# direnv 配合 CSH/TCSH 使用与配置指南
+
+本项目/环境已引入 `direnv` 来实现目录级别的环境变量自动加载与隔离。无论你使用的是 bash 还是 tcsh，都可以通过以下步骤快速完成环境配置。
+
+## 1. 挂载 direnv 钩子 (修改 `.cshrc`)
+
+为了让你的终端在切换目录时能自动识别并加载 `.envrc` 文件，需要在你的用户主目录配置文件 `~/.cshrc`（或 `~/.tcshrc`）的末尾添加以下指令：
+
+```csh
+# ~/.cshrc
+
+# add direnv bin to PATH 
+setenv PATH                     "/home2/usrhome/zengjie/.local/bin:${PATH}"
+
+# autoload .envrc
+alias precmd 'eval `/home2/usrhome/zengjie/.local/bin/direnv export tcsh`'
+
+```
+
+*(注：如果你的终端不是 csh/tcsh 而是 bash/zsh，请参考 direnv 官方文档在 `.bashrc`/`.zshrc` 中添加对应的 hook)*
+
+添加完成后，执行 `source ~/.cshrc` 或重新打开终端让配置生效。
+
+## 2. 增强 direnv：支持解析 CSH 脚本 (修改 `direnvrc`)
+
+`direnv` 默认只支持解析 bash 语法。为了让它能无缝加载我们传统的 `.csh` 环境脚本并处理 `module load` 等命令，我们需要扩展它的全局配置。
+
+请创建或编辑文件 `~/.config/direnv/direnvrc`（如果目录不存在请先 `mkdir -p ~/.config/direnv`），并将以下函数加入其中：
+
+```bash
+# ~/.config/direnv/direnvrc
+
+# 定义安全读取 csh 脚本的扩展函数
+source_csh_if_exists() {
+  local file="$1"
+  
+  if [ ! -f "$file" ]; then
+    log_status "Skipping: csh environment file not found at '$file'"
+    return 0
+  fi
+  
+  local in_env=0
+  
+  while IFS= read -r line; do
+    if [ "$line" = "---DIRENV_ENV_START---" ]; then
+      in_env=1
+      continue
+    fi
+    
+    if [ $in_env -eq 0 ]; then
+      # 打印原脚本的普通提示信息
+      echo "$line" >&2
+    else
+      # 抓取并导出真正的环境变量
+      if [[ "$line" == *"="* ]]; then
+        local key="${line%%=*}"
+        local value="${line#*=}"
+        
+        # 屏蔽用作后门的 JENKINS_RUN 变量
+        if [[ "$key" == "JENKINS_RUN" ]]; then
+          continue
+        fi
+        
+        # 过滤并导出合法的变量
+        if [[ "$key" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ && "$key" != "_" ]]; then
+          export "$key=$value"
+        fi
+      fi
+    fi
+  # 通过子进程后台执行，注入 JENKINS_RUN=1 绕过 $_ 防呆校验，最后打印环境
+  done < <(env JENKINS_RUN=1 csh -c "source '$file' ; unsetenv JENKINS_RUN ; echo '---DIRENV_ENV_START---' ; env")
+}
+
+```
+
+## 3. 在项目中使用 ( `.envrc` 示例)
+
+在项目的根目录下创建一个 `.envrc` 文件，然后你就可以直接在里面调用我们刚刚写好的扩展能力了：
+
+```bash
+# .envrc
+
+# 1. 自动加载同目录下的 CSH 环境配置 (包含 module load, setenv 等)
+source_csh_if_exists ./prj_env.csh
+
+# 2. 你也可以在这里继续追加标准的 bash 环境变量声明
+export PROJECT_WORK_MODE="DEBUG"
+export PATH="$PWD/scripts/bin:$PATH"
+
+# 3. 打印自定义提示
+echo ">>> IC Project Environment Loaded Successfully <<<"
+
+```
+
+> **注意：** 处于安全机制，每次创建或修改 `.envrc` 文件后，终端会提示 `direnv: error .envrc is blocked`。你需要手动输入 `direnv allow` 进行授权。
+
+## 4. direnv 常用命令介绍
+
+以下是日常开发中最常用的 direnv 维护命令：
+
+| 命令 | 说明 | 使用场景 |
+| --- | --- | --- |
+| `direnv allow` | **授权/加载** 当前目录的 `.envrc` | 首次创建 `.envrc`，或该文件被修改后，必须执行一次以批准加载。 |
+| `direnv deny` | **撤销授权**，拒绝加载 `.envrc` | 当你不想再加载该目录的环境变量，或发现脚本有安全风险时。 |
+| `direnv reload` | **强制重新加载** 环境变量 | 当底层依赖的文件（如 `prj_env.csh`）发生改变时，强制刷新环境。 |
+| `direnv status` | 查看 direnv 的 **当前运行状态** | 检查当前环境是否加载成功，以及配置文件所在的绝对路径。 |
+| `direnv edit .` | **安全编辑** `.envrc` 文件 | 调用系统默认编辑器打开配置文件，保存退出后会自动执行 `direnv allow`，极其方便。 |
