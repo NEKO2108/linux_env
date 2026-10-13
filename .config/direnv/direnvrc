@@ -1,0 +1,48 @@
+# ~/.config/direnv/direnvrc
+
+source_csh_if_exists() {
+  local file="$1"
+  
+  # 1. 文件存在性检查
+  if [ ! -f "$file" ]; then
+    log_status "Skipping: csh environment file not found at '$file'"
+    return 0
+  fi
+  
+  local in_env=0
+  
+  # 2. 逐行读取 csh 子进程的输出
+  while IFS= read -r line; do
+    # 遇到环境输出分隔符，切换为解析模式
+    if [ "$line" = "---DIRENV_ENV_START---" ]; then
+      in_env=1
+      continue
+    fi
+    
+    if [ $in_env -eq 0 ]; then
+      # 【打印阶段】将原 csh 脚本中的提示性 echo 信息原样打印到屏幕
+      echo "$line" >&2
+    else
+      # 【解析阶段】抓取并导出环境变量
+      if [[ "$line" == *"="* ]]; then
+        local key="${line%%=*}"
+        local value="${line#*=}"
+        
+        # 拦截：过滤掉作为后门的 JENKINS_RUN，防止污染测试环境
+        if [[ "$key" == "JENKINS_RUN" ]]; then
+          continue
+        fi
+        
+        # 过滤掉非法变量名及内置的 _ 变量
+        if [[ "$key" =~ ^[a-zA-Z_][a-zA-Z0-9_]*$ && "$key" != "_" ]]; then
+          export "$key=$value"
+        fi
+      fi
+    fi
+  # 3. 核心沙箱命令：
+  #  - env JENKINS_RUN=1 绕过 csh 脚本的 $_ 严苛检查
+  #  - source 加载环境 (含 module load)
+  #  - unsetenv JENKINS_RUN 销毁后门痕迹
+  #  - echo 分隔符并打印 env
+  done < <(env JENKINS_RUN=1 csh -c "source '$file' ; unsetenv JENKINS_RUN ; echo '---DIRENV_ENV_START---' ; env")
+}
