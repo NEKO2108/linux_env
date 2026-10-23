@@ -1,0 +1,37 @@
+[user]
+    email = jie.zeng@joinsilicon.com
+    name = jie.zeng
+[color]
+    ui = auto
+[pull]
+    rebase = false
+[alias]
+    # alog: 一行图 + 相对时间（最常用）
+    alog = log --graph   --all --format=format:'%C(bold blue)%h%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(bold green)(%ad)%C(reset) %C(bold white)- %an%C(reset)' --abbrev-commit --date=relative
+    # blog: 图 + 相对时间 + 文件变更明细
+    blog = log           --all --decorate --graph --date=relative --abbrev-commit --name-status
+    # clog: 同 alog，但为绝对时间 + 文件变更明细
+    clog = log --graph   --all --format=format:'%C(bold blue)%h%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(bold green)(%ad)%C(reset) %C(bold white)- %an%C(reset)' --abbrev-commit --date=default --name-status
+    # zlog: 最简单行版（oneline + 拓扑图 + 相对时间）
+    zlog = log --oneline --all --decorate --graph --date=relative --abbrev-commit
+    # xlog: 同 alog，但为绝对时间
+    xlog = log --graph   --all --format=format:'%C(bold blue)%h%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(bold green)(%ad)%C(reset) %C(bold white)- %an%C(reset)' --abbrev-commit --date=default
+    # mlog: 同 alog，但不含 merge 提交
+    mlog = log --graph   --all --format=format:'%C(bold blue)%h%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(bold green)(%ad)%C(reset) %C(bold white)- %an%C(reset)' --abbrev-commit --date=relative --no-merges
+    # dmlog: 同 clog，但不含 merge 提交
+    dmlog = log --graph  --all --format=format:'%C(bold blue)%h%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset) %C(bold green)(%ad)%C(reset) %C(bold white)- %an%C(reset)' --abbrev-commit --date=default --name-status --no-merges
+    # ---- 常用短命令 ----
+    st = status
+    co = checkout
+    ci = commit
+    br = branch
+    # 撤销最近一次 commit（改动退回工作区）
+    unci = reset HEAD^
+    # 撤销暂存（unstage）
+    unstage = reset HEAD --
+    # 最近2次提交 + 文件统计
+    last = log --stat -2 HEAD
+    # 最近一次提交的 diff
+    change = diff HEAD^ HEAD
+    # 列出远程 tag
+    atag = ls-remote --tags
